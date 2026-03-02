@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { Note, NoteCreationPayload } from '@/types/note';
+import type { Note, NoteCreationPayload } from '../types/note';
 interface Response {
   notes: Note[];
   totalPages: number;

@@ -1,6 +1,6 @@
 'use client';
-import Modal from '@/components/Modal/Modal';
-import OpenModalBtn from '@/components/OpenModalBtn/OpenModalBtn';
+import Modal from '../Modal/Modal';
+import OpenModalBtn from '../OpenModalBtn/OpenModalBtn';
 import { JSX, useState } from 'react';
 interface ModalManagerProps {
   btnText: string;

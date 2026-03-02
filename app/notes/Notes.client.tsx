@@ -1,17 +1,17 @@
 'use client'
-import SearchBox from '@/components/SearchBox/SearchBox';
+import SearchBox from '../../components/SearchBox/SearchBox';
 import { useState } from 'react';
-import css from '@/app/notes/NotesPage.module.css';
+import css from './NotesPage.module.css';
 import { useQuery } from '@tanstack/react-query';
-import { getNotes } from '@/lib/api';
+import { getNotes } from '../../lib/api';
 import { useDebouncedCallback } from 'use-debounce';
-import NoteList from '@/components/NoteList/NoteList';
-import NoteForm from '@/components/NoteForm/NoteForm';
-import Modal from '@/components/Modal/Modal';
-import Pagination from '@/components/Pagination/Pagination';
-import Error from '@/components/Error/Error';
+import NoteList from '../../components/NoteList/NoteList';
+import NoteForm from '../../components/NoteForm/NoteForm';
+import Modal from '../../components/Modal/Modal';
+import Pagination from '../../components/Pagination/Pagination';
+import Error from '../../components/Error/Error';
 import { BarLoader } from 'react-spinners';
-import ModalManager from '@/components/ModalManager/modalManager';
+import ModalManager from '../../components/ModalManager/modalManager';
 
 export default function NotesClient() {
   const [page, setPage] = useState(1);

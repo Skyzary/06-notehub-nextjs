@@ -1,4 +1,4 @@
-import css from  './OpenModalBtn.module.css'
+import css from './OpenModalBtn.module.css'
 interface OpenModalBtnProps {
   text: string;
   onClick: () => void;
