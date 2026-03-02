@@ -29,7 +29,7 @@ export default function Pagination({
       breakClassName={css.break}
       breakLinkClassName={css.breakLink}
       disabledClassName={css.disabled}
-      forcePage={page}
+      forcePage={pageCount > 0 ? page - 1 : 0}
     />
   )
 }
