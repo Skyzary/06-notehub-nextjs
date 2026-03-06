@@ -5,7 +5,7 @@ const queryClient = new QueryClient();
 interface Props {
   children: React.ReactNode;
 }
-export default function QueryProvider({ children }: Props) {
+export default function TanStackProvider({ children }: Props) {
   return (
     <QueryClientProvider client={queryClient}>
       {children}
