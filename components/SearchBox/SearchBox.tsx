@@ -1,19 +1,25 @@
+'use client'
+import { useState } from 'react';
 import css from './SearchBox.module.css'
 
 interface SearchBoxProps {
-  query: string
-  onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onQueryChange: (query: string) => void
 }
 
-export default function SearchBox({ query, onInputChange }: SearchBoxProps) {
+export default function SearchBox({ onQueryChange }: SearchBoxProps) {
+  const [localQuery, setLocalQuery] = useState('');
+
   return (
     <input
       type="text"
       placeholder="Search"
-      value={query}
-      onChange={onInputChange}
+      value={localQuery}
+      onChange={(e) => {
+        const v = e.target.value;
+        setLocalQuery(v);
+        onQueryChange(v);
+      }}
       className={css.input}
     />
   )
 }
-

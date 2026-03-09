@@ -11,52 +11,54 @@ import Modal from '../../components/Modal/Modal';
 import Pagination from '../../components/Pagination/Pagination';
 import Error from '../../components/Error/Error';
 import { BarLoader } from 'react-spinners';
-import ModalManager from '../../components/ModalManager/modalManager';
 
 export default function NotesClient() {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { data, isLoading, refetch } = useQuery({
+  const debouncedSetQuery = useDebouncedCallback((value: string) => {
+    setQuery(value);
+  }, 500);
+
+  const onQueryChange = (value: string) => {
+    setPage(1);
+    debouncedSetQuery(value);
+  };
+
+  const { data, isLoading, isError } = useQuery({
     queryKey: query ? ['notes', query, page] : ['notes', page],
     queryFn: query
       ? () => getNotes(query, page)
       : () => getNotes(undefined, page),
+    placeholderData: { notes: [], totalPages: 0 },
   });
-
-  function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = e.target.value;
-    onUpdate(value);
-  }
-  const onUpdate = useDebouncedCallback((value: string) => {
-    setQuery(value);
-    setPage(1);
-  }, 500);
 
   return (
     <div className={css.app}>
       <div className={css.topContainer}>
-        <SearchBox query={query} onInputChange={onInputChange} />
+        <SearchBox onQueryChange={onQueryChange} />
         {data && data.totalPages > 1 && (
           <Pagination
             page={page}
             pageCount={data.totalPages}
-            onPageChange={(selectedItem) => setPage(selectedItem.selected + 1)}
+            onPageChange={(selectedItem: { selected: number }) => setPage(selectedItem.selected + 1)}
           />
         )}
-        <ModalManager btnText={'Add Note'}>
-          {(close) => (
-            <NoteForm onClose={close} onNoteSaved={close} onCancel={close}  />
-          )}
-        </ModalManager>
+        <button onClick={() => setIsModalOpen(true)}>Add Note</button>
       </div>
+
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <NoteForm onNoteSaved={() => setIsModalOpen(false)} />
+      </Modal>
 
       <NoteList notes={data?.notes || []} />
 
       {isLoading ? (
         <BarLoader color="#2341ba" area-label="Loading notes..." />
       ) : null}
-      {!isLoading && data?.notes.length === 0 && <p>No notes found.</p>}
+      {isError && <Error message="Failed to load notes" />}
+      {!isLoading && !isError && data?.notes.length === 0 && <p>No notes found.</p>}
     </div>
   );
 }
