@@ -45,11 +45,11 @@ export default function NotesClient() {
             onPageChange={(selectedItem: { selected: number }) => setPage(selectedItem.selected + 1)}
           />
         )}
-        <button onClick={() => setIsModalOpen(true)}>Add Note</button>
+        <button className={css.addButton} onClick={() => setIsModalOpen(true)}>Add Note</button>
       </div>
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <NoteForm onNoteSaved={() => setIsModalOpen(false)} />
+        <NoteForm onNoteSaved={() => setIsModalOpen(false)} onCancel={() => setIsModalOpen(false)} />
       </Modal>
 
       <NoteList notes={data?.notes || []} />

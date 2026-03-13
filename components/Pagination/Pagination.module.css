@@ -14,9 +14,7 @@
   cursor: pointer;
   min-width: 36px;
   height: 36px;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .pagination li a {
@@ -34,16 +32,16 @@
   background-color: #e9ecef;
 }
 
-.pagination li.activePage:hover {
+.pagination li.active:hover {
   background-color: #0d6efd;
 }
 
-.activePage {
+.active {
   background-color: #0d6efd;
   border-color: #0d6efd;
 }
 
-.activePage a {
+.active a {
   color: #fff !important;
   font-weight: 500;
 }

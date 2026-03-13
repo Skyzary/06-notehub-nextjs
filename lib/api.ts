@@ -19,10 +19,12 @@ const instance = axios.create({
 export async function getNotes(
   query?: string,
   page: number = 0,
+  tag?: string
 ): Promise<Response> {
   const { data } = await instance.get<Response>(params.endpoints.notes, {
     params: {
       ...(query ? { search: query } : {}),
+      ...(tag && tag !== 'all' ? { tag: tag } : {}), // changed 'tags' to 'tag' according to common API patterns or confirmed behavior
       page: page,
     },
   });
