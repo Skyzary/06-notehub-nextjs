@@ -62,12 +62,14 @@ export default function NotesFilterClient({ tag }: NotesFilterClientProps) {
         </button>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <NoteForm
-          onNoteSaved={() => setIsModalOpen(false)}
-          onCancel={() => setIsModalOpen(false)}
-        />
-      </Modal>
+      {isModalOpen && (
+        <Modal onClose={() => setIsModalOpen(false)}>
+          <NoteForm
+            onNoteSaved={() => setIsModalOpen(false)}
+            onCancel={() => setIsModalOpen(false)}
+          />
+        </Modal>
+      )}
 
       <NoteList notes={data?.notes || []} />
 

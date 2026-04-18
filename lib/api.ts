@@ -10,10 +10,11 @@ const params = {
     notes: '/notes',
   },
 };
+const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN?.replace(/^['"]|['"]$/g, '');
 const instance = axios.create({
   baseURL: params.baseURL,
   headers: {
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
+    Authorization: `Bearer ${token}`,
   },
 });
 export async function getNotes(

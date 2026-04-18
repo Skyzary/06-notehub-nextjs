@@ -1,3 +1,4 @@
+'use client';
 import type { Note } from '../../types/note'
 import css from './NoteList.module.css'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -28,7 +29,11 @@ function NoteItem({ note }: NoteItemProps) {
       </Link>
       <button
         className={css.button}
-        onClick={() => deleteMutation.mutate(String(note.id))}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          deleteMutation.mutate(String(note.id));
+        }}
         disabled={deleteMutation.isPending}
       >
         {deleteMutation.isPending ? 'Deleting...' : 'Delete'}
