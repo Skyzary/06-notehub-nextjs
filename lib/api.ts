@@ -5,7 +5,7 @@ interface Response {
   totalPages: number;
 }
 const params = {
-  baseURL: 'https://notehub-public.goit.study/api/',
+  baseURL: 'https://notehub-public.goit.study/api',
   endpoints: {
     notes: '/notes',
   },
@@ -13,7 +13,7 @@ const params = {
 const instance = axios.create({
   baseURL: params.baseURL,
   headers: {
-    Authorization: `bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
   },
 });
 export async function getNotes(

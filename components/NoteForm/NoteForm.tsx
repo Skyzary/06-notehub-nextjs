@@ -18,11 +18,10 @@ const noteSchema = Yup.object().shape({
 
 interface NoteFormProps {
   onNoteSaved: () => void
-  onCancel: () => void
-  onClose?: () => void
+  onCancel?: () => void
 }
 
-export default function NoteForm({ onNoteSaved, onCancel, onClose }: NoteFormProps) {
+export default function NoteForm({ onNoteSaved, onCancel }: NoteFormProps) {
   const queryClient = useQueryClient()
   const createMutation = useMutation({
     mutationFn: addNote,
