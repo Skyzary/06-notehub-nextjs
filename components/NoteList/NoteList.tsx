@@ -13,14 +13,27 @@ function NoteItem({ note }: NoteItemProps) {
   const queryClient = useQueryClient()
   const deleteMutation = useMutation({
     mutationFn: deleteNote,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['notes'] })
+    onSuccess: (_, deletedId) => {
+      // Immediately remove the note from all cached lists to prevent 404s on stale items
+      queryClient.setQueriesData({ queryKey: ['notes'] }, (old: any) => {
+        if (!old || !old.notes) return old;
+        return {
+          ...old,
+          notes: old.notes.filter((note: Note) => String(note.id) !== deletedId),
+        };
+      });
+      queryClient.invalidateQueries({ queryKey: ['notes'] });
+      queryClient.removeQueries({ queryKey: ['note', deletedId] });
     },
-  })
+  });
 
   return (
-    <li className={css.listItem}>
-      <Link href={`/notes/${note.id}`} className={css.link}>
+    <li className={`${css.listItem} ${deleteMutation.isPending ? css.deleting : ''}`}>
+      <Link 
+        href={`/notes/${note.id}`} 
+        className={`${css.link} ${deleteMutation.isPending ? css.disabled : ''}`}
+        onClick={(e) => deleteMutation.isPending && e.preventDefault()}
+      >
         <h2 className={css.title}>{note.title}</h2>
         <p className={css.content}>{note.content}</p>
         <div className={css.footer}>
